@@ -1,0 +1,13 @@
+#calculator {
+    display: flex;
+}
+
+.numbers {
+    display: flex;
+    flex-direction: column;
+}
+
+.operators {
+    display: flex;
+    flex-direction: column;
+}
