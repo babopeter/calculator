@@ -4,6 +4,16 @@ function add(...numbers) {
 }
 
 function subtract(...numbers) {
-    let result = numbers.reduce((sum, current) => sum - current);
+    let result = numbers.reduce((acc, current) => acc - current);
+    return result;
+}
+
+function multiply(...numbers) {
+    let result = numbers.reduce((acc, current) => acc * current);
+    return result;
+}
+
+function divide(...numbers) {
+    let result = numbers.reduce((acc, current) => acc / current);
     return result;
 }
