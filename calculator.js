@@ -5,6 +5,7 @@ let displayValue = "";
 let previousValue = "";
 const buttons = document.querySelectorAll('button');
 let displayArr = [];
+let operateArr = [];
 
 function add(...numbers) {
     let result = numbers.reduce((sum, current) => sum + current, 0);
@@ -26,28 +27,23 @@ function divide(...numbers) {
     return result;
 }
 
-function operate(firstNum, operator, secondNum) {
+function operate(operator, ...numbers) {
     let result;
     switch (operator) {
         case "+":
-            result = add(firstNum, secondNum);
+            result = add(...numbers);
             break;
         case "-":
-            result = subtract(firstNum, secondNum);
+            result = subtract(...numbers);
             break;
         case "x":
-            result = multiply(firstNum, secondNum);
+            result = multiply(...numbers);
             break;
         case "/":
-            result = divide(firstNum, secondNum);
+            result = divide(...numbers);
             break;
     }
     return result;
-}
-
-function displayNum(...num) {
-    let displayValue = [];
-    displayValue.push(...num);
 }
 
 // each time a button is pressed detect the button
@@ -66,28 +62,24 @@ function displayNum(...num) {
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         if(button.className === 'number') {
-            // place the pressed numbers in an array
             displayArr.push(button.id);
-            // create a single number from the array
-            // this doesn't work, the number is still in an array
             displayValue = parseInt(displayArr.join(''));
             document.getElementById('displaylower').value = displayValue;
-            console.log({displayValue});
-
         } else if (button.className === 'operator') {
-            // when you click an operator store the value in previousValue
+            operateArr.push(displayValue);
             previousValue = displayValue;
-            console.log({previousValue});
             operator = button.id;
-            console.log({operator});
             displayArr = [];
         } else if (button.className === 'equal') {
-            // find a way to print the value returned by operate
-            let result = operate(previousValue, operator, displayValue);
-            console.log({result});
+            operateArr.push(displayValue);
+            let result = operate(operator, ...operateArr);
+            console.log({result}); //log the result
             document.getElementById('displaylower').value = result;
-            
-           
         }
     });
 });
+
+// make the calculator work for chaining different operators
+// call the operate() function every time an operator is pressed
+// store the resulting number in a variable
+// include that variable in the new operation as the first array element
