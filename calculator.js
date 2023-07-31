@@ -3,7 +3,10 @@ let secondNum = 0;
 let operator = "+";
 let displayValue = "";
 let previousValue = "";
-const buttons = document.querySelectorAll('button');
+//const buttons = document.querySelectorAll('button');
+const numberButtons = document.querySelectorAll('.number');
+const operatorButtons = document.querySelectorAll('.operator');
+const equalButton = document.getElementById('=');
 let displayArr = [];
 let operateArr = [];
 
@@ -59,25 +62,40 @@ function operate(operator, ...numbers) {
 // display the first value and the operator in the upper display
 // run the operate function and display the result 
 
-buttons.forEach((button) => {
+numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        if(button.className === 'number') {
-            displayArr.push(button.id);
-            displayValue = parseInt(displayArr.join(''));
-            document.getElementById('displaylower').value = displayValue;
-        } else if (button.className === 'operator') {
-            operateArr.push(displayValue);
-            previousValue = displayValue;
-            operator = button.id;
-            displayArr = [];
-        } else if (button.className === 'equal') {
-            operateArr.push(displayValue);
-            let result = operate(operator, ...operateArr);
-            console.log({result}); //log the result
-            document.getElementById('displaylower').value = result;
-        }
+
+        displayArr.push(button.id);
+        displayValue = parseInt(displayArr.join(''));
+        document.getElementById('displaylower').value = displayValue;
+
     });
 });
+
+operatorButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        operateArr.push(displayValue);
+        previousValue = displayValue;
+        operator = button.id;
+        displayArr = [];
+        console.log({ operateArr });
+        console.log({ operator });
+        let result = operate(operator, ...operateArr);
+        console.log({ result });
+        document.getElementById('displayupper').value = result;
+    });
+});
+
+equalButton.addEventListener('click', () => {
+    operateArr.push(displayValue);
+    let result = operate(operator, ...operateArr);
+    console.log({ result }); //log the result
+    document.getElementById('displaylower').value = result;
+});
+
+
+
+
 
 // make the calculator work for chaining different operators
 // call the operate() function every time an operator is pressed
