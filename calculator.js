@@ -2,6 +2,7 @@ let firstNum = 0;
 let secondNum = 0;
 let operator = "+";
 let displayValue = 0;
+const display = document.getElementById('display');
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
 const equalsButton = document.getElementById('=');
@@ -52,7 +53,7 @@ function operate(operator, ...numbers) {
 function displayButton(button) {
     displayArr.push(button.id);
     displayValue = parseInt(displayArr.join(''));
-    document.getElementById('display').value = displayValue;
+    display.value = displayValue;
     
 }
 
@@ -61,7 +62,7 @@ function storeNumber(number) {
 }
 
 function displayResult(number) {
-    document.getElementById('display').value = number;
+    display.value = number;
 }
 
 // clicking numbers
