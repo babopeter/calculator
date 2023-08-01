@@ -1,12 +1,14 @@
 let firstNum = 0;
 let secondNum = 0;
 let operator = "+";
-let displayValue = "";
+let displayValue = 0;
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
-const equalButton = document.getElementById('=');
-let displayArr = [];
-let operateArr = [];
+const equalsButton = document.getElementById('=');
+const clearButton = document.getElementById('clear');
+const deleteButton = document.getElementById('delete');
+let displayArr = [0];
+let operateArr = [0];
 
 function add(...numbers) {
     let result = numbers.reduce((sum, current) => sum + current, 0);
@@ -89,7 +91,7 @@ operatorButtons.forEach((button) => {
 });
 
 // clicking equal
-equalButton.addEventListener('click', () => {
+equalsButton.addEventListener('click', () => {
     operateArr.push(displayValue);
     let result = operate(operator, ...operateArr);
     console.log({ result }); //log the result
