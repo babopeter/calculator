@@ -1,15 +1,18 @@
-let firstNum = 0;
-let secondNum = 0;
-let operator = "+";
-let displayValue = 0;
-const display = document.getElementById('display');
+const displayScreen = document.getElementById('display');
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
 const equalsButton = document.getElementById('=');
 const clearButton = document.getElementById('clear');
 const deleteButton = document.getElementById('delete');
-let displayArr = [0];
-let operateArr = [0];
+
+let displayArr = [];
+
+let operator = undefined;
+let displayValue = 0;
+let currentNumber = 0;
+let prevNumber = undefined;
+
+let result = undefined;
 
 function add(...numbers) {
     let result = numbers.reduce((sum, current) => sum + current, 0);
@@ -31,20 +34,20 @@ function divide(...numbers) {
     return result;
 }
 
-function operate(operator, ...numbers) {
+function operate(operator, prev, current) {
     let result;
     switch (operator) {
         case "+":
-            result = add(...numbers);
+            result = add(prev, current);
             break;
         case "-":
-            result = subtract(...numbers);
+            result = subtract(prev, current);
             break;
         case "x":
-            result = multiply(...numbers);
+            result = multiply(prev, current);
             break;
         case "/":
-            result = divide(...numbers);
+            result = divide(prev, current);
             break;
     }
     return result;
@@ -53,22 +56,40 @@ function operate(operator, ...numbers) {
 function displayButton(button) {
     displayArr.push(button.id);
     displayValue = parseInt(displayArr.join(''));
-    display.value = displayValue;
+    displayScreen.value = displayValue;
     
 }
 
-function storeNumber(number) {
-    operateArr.push(number);
+function storeCurrentNumber() {
+    currentNumber = displayValue;
+    console.log({currentNumber});
+}
+
+function storePrevNumber() {
+    if (result != undefined) {
+        prevNumber = result;
+    } else {
+        prevNumber = currentNumber;
+    }
+    
+    currentNumber = undefined;
+    console.log({prevNumber});
 }
 
 function displayResult(number) {
-    display.value = number;
+    displayScreen.value = number;
 }
+
+// function clear() {
+//     displayArr = [];
+//     displayScreen.value = 0;
+// }
 
 // clicking numbers
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
         displayButton(button);
+        storeCurrentNumber();
     });
 });
 
@@ -76,27 +97,28 @@ numberButtons.forEach((button) => {
 // clicking operators
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        storeNumber(displayValue);
-    
+
+        storePrevNumber();
+
         operator = button.id;
         displayArr = [];
 
-        console.log({ operateArr });
-        console.log({ operator });
-
-        let result = operate(operator, ...operateArr);
-
+        if (result != undefined) {
+            result = operate(operator, prevNumber, currentNumber);
+        }
+        
         console.log({ result });
-        displayResult(result);
+        //displayResult(result);
     });
 });
 
 // clicking equal
 equalsButton.addEventListener('click', () => {
-    operateArr.push(displayValue);
-    let result = operate(operator, ...operateArr);
+    
+    result = operate(operator, prevNumber, currentNumber);
     console.log({ result }); //log the result
     displayResult(result);
+    
 });
 
 
