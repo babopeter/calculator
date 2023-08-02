@@ -123,9 +123,10 @@ operatorButtons.forEach((button) => {
 // clicking equal
 equalsButton.addEventListener('click', () => {
     result = operate(operator, prevNumber, currentNumber);
-    console.log({ result }); //log the result
-    displayResult(result.round(7));
-    
+    if (result != undefined) {
+        console.log({ result }); //log the result
+        displayResult(result.round(7));
+    }
 });
 
 // clicking AC
