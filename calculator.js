@@ -80,10 +80,17 @@ function displayResult(number) {
     displayScreen.value = number;
 }
 
-// function clear() {
-//     displayArr = [];
-//     displayScreen.value = 0;
-// }
+Number.prototype.round = function(places) {
+    return +(Math.round(this + "e+" + places)  + "e-" + places);
+  }
+
+function clear() {
+    displayArr = [];
+    displayScreen.value = 0;
+    currentNumber = 0;
+    prevNumber = 0;
+    result = 0;
+}
 
 // clicking numbers
 numberButtons.forEach((button) => {
@@ -97,34 +104,25 @@ numberButtons.forEach((button) => {
 // clicking operators
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
-
         storePrevNumber();
-
         operator = button.id;
         displayArr = [];
-
         if (result != undefined) {
             result = operate(operator, prevNumber, currentNumber);
         }
-        
-        console.log({ result });
-        //displayResult(result);
+        console.log({ result }); // log the result
     });
 });
 
 // clicking equal
 equalsButton.addEventListener('click', () => {
-    
     result = operate(operator, prevNumber, currentNumber);
     console.log({ result }); //log the result
-    displayResult(result);
+    displayResult(result.round(7));
     
 });
 
-
-
-
-// make the calculator work for chaining different operators
-// call the operate() function every time an operator is pressed
-// store the resulting number in a variable
-// include that variable in the new operation as the first array element
+// clicking AC
+clearButton.addEventListener('click', () => {
+    clear();
+})
