@@ -4,6 +4,7 @@ const operatorButtons = document.querySelectorAll('.operator');
 const equalsButton = document.getElementById('=');
 const clearButton = document.getElementById('clear');
 const deleteButton = document.getElementById('delete');
+const decimalButton = document.getElementById('.');
 
 let displayArr = [];
 
@@ -80,6 +81,12 @@ function displayResult(number) {
     displayScreen.value = number;
 }
 
+function checkResult() {
+    if (result != undefined) {
+        result = operate(operator, prevNumber, currentNumber);
+    }
+}
+
 Number.prototype.round = function(places) {
     return +(Math.round(this + "e+" + places)  + "e-" + places);
   }
@@ -88,8 +95,8 @@ function clear() {
     displayArr = [];
     displayScreen.value = 0;
     currentNumber = 0;
-    prevNumber = 0;
-    result = 0;
+    prevNumber = undefined;
+    result = undefined;
 }
 
 function del() {
@@ -103,6 +110,8 @@ numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
         displayButton(button);
         storeCurrentNumber();
+        checkResult();
+        console.log({ result }); // log the result
     });
 });
 
@@ -113,9 +122,8 @@ operatorButtons.forEach((button) => {
         storePrevNumber();
         operator = button.id;
         displayArr = [];
-        if (result != undefined) {
-            result = operate(operator, prevNumber, currentNumber);
-        }
+        checkResult();
+        result = operate(operator, prevNumber, currentNumber);
         console.log({ result }); // log the result
     });
 });
@@ -138,3 +146,12 @@ deleteButton.addEventListener('click', () => {
     del();
     storeCurrentNumber();
 })
+
+decimalButton.addEventListener('click', () => {
+    // displayValue = (displayValue * 10) / 100;
+})
+
+// add decimal support
+// add keyboard support
+// display funny error message when dividing by 0
+// CSS - make it look nice
