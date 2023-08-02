@@ -101,8 +101,14 @@ function clear() {
 
 function del() {
     displayArr.pop();
+    console.log({displayArr}); // log
     displayValue = parseInt(displayArr.join(''));
+    if (displayArr.length === 0) {
+        displayValue = 0;
+        result = undefined;
+    }
     displayScreen.value = displayValue;
+    console.log({displayValue}); //log
 }
 
 // clicking numbers
@@ -131,6 +137,9 @@ operatorButtons.forEach((button) => {
 // clicking equal
 equalsButton.addEventListener('click', () => {
     result = operate(operator, prevNumber, currentNumber);
+    // convert each digit to array
+    displayArr = Array.from(String(result), Number);
+    console.log({displayArr}); //log
     if (result != undefined) {
         console.log({ result }); //log the result
         displayResult(result.round(7));
@@ -150,6 +159,11 @@ deleteButton.addEventListener('click', () => {
 decimalButton.addEventListener('click', () => {
     // displayValue = (displayValue * 10) / 100;
 })
+
+
+// bug - deleting doesn't work with a computed result
+// if the array has a number that not single digit it 
+// deletion removes the whole number
 
 // add decimal support
 // add keyboard support
