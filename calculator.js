@@ -92,6 +92,12 @@ function clear() {
     result = 0;
 }
 
+function del() {
+    displayArr.pop();
+    displayValue = parseInt(displayArr.join(''));
+    displayScreen.value = displayValue;
+}
+
 // clicking numbers
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -125,4 +131,9 @@ equalsButton.addEventListener('click', () => {
 // clicking AC
 clearButton.addEventListener('click', () => {
     clear();
+})
+
+deleteButton.addEventListener('click', () => {
+    del();
+    storeCurrentNumber();
 })
