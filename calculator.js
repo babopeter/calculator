@@ -14,6 +14,7 @@ let currentNumber = 0;
 let prevNumber = undefined;
 
 let result = undefined;
+let equalsPressed = false;
 
 function add(...numbers) {
     let result = numbers.reduce((sum, current) => sum + current, 0);
@@ -74,7 +75,8 @@ function storePrevNumber() {
     }
     
     currentNumber = undefined;
-    console.log({prevNumber});
+    console.log({prevNumber}); // log
+    console.log({currentNumber}); // log
 }
 
 function displayResult(number) {
@@ -97,6 +99,7 @@ function clear() {
     currentNumber = 0;
     prevNumber = undefined;
     result = undefined;
+    equalsPressed = false;
 }
 
 function del() {
@@ -136,6 +139,7 @@ operatorButtons.forEach((button) => {
 
 // clicking equal
 equalsButton.addEventListener('click', () => {
+    equalsPressed = true;
     result = operate(operator, prevNumber, currentNumber);
     // convert each digit to array
     displayArr = Array.from(String(result), Number);
@@ -152,18 +156,26 @@ clearButton.addEventListener('click', () => {
 })
 
 deleteButton.addEventListener('click', () => {
-    del();
-    storeCurrentNumber();
+    // if (result === undefined) {
+    //     del();
+    //     storeCurrentNumber();
+    // } else {
+    //     clear();
+    // }
+    if (!equalsPressed) {
+        del();
+        storeCurrentNumber();
+    } else {
+        clear();
+    }
+   
 })
 
 decimalButton.addEventListener('click', () => {
-    // displayValue = (displayValue * 10) / 100;
+    displayScreen.value = `${displayValue}.`;
 })
 
-
-// bug - deleting doesn't work with a computed result
-// if the array has a number that not single digit it 
-// deletion removes the whole number
+// bug - deleting the result and continuing with a new operation
 
 // add decimal support
 // add keyboard support
