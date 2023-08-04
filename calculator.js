@@ -1,20 +1,14 @@
+
+
 const displayScreen = document.getElementById('display');
-const numberButtons = document.querySelectorAll('.number');
-const operatorButtons = document.querySelectorAll('.operator');
-const equalsButton = document.getElementById('=');
-const clearButton = document.getElementById('clear');
-const deleteButton = document.getElementById('delete');
-const decimalButton = document.getElementById('.');
+const numberButtons = document.querySelectorAll('[data-number]');
+const operatorButtons = document.querySelectorAll('[data-operator]');
+const equalsButton = document.querySelector('[data-equals]');
+const deleteButton = document.getElementById('[data-delete]');
+const allClearButton = document.getElementById('[data-all-clear]');
+const previousOperation = document.querySelector('[data-previous-operator]');
+const currentOperation = document.querySelector('[data-current-operator]');
 
-let displayArr = [];
-
-let operator = undefined;
-let displayValue = 0;
-let currentNumber = 0;
-let prevNumber = undefined;
-
-let result = undefined;
-let equalsPressed = false;
 
 function add(...numbers) {
     let result = numbers.reduce((sum, current) => sum + current, 0);
@@ -56,10 +50,16 @@ function operate(operator, prev, current) {
 }
 
 function displayButton(button) {
-    displayArr.push(button.id);
-    displayValue = parseInt(displayArr.join(''));
-    displayScreen.value = displayValue;
-    
+    if (!decimalPressed) {
+        displayArr.push(button.id);
+        displayValue = parseInt(displayArr.join(''));
+        displayScreen.value = displayValue;
+    } else {
+        displayArr.push(button.id);
+        //displayValue = parseInt(displayArr.join(''));
+        displayScreen.value = `${displayValue}.${button.id}`;
+        // to be continued
+    }
 }
 
 function storeCurrentNumber() {
@@ -155,27 +155,21 @@ clearButton.addEventListener('click', () => {
     clear();
 })
 
+// clicking delete
 deleteButton.addEventListener('click', () => {
-    // if (result === undefined) {
-    //     del();
-    //     storeCurrentNumber();
-    // } else {
-    //     clear();
-    // }
     if (!equalsPressed) {
         del();
         storeCurrentNumber();
     } else {
         clear();
     }
-   
 })
 
+// clicking decimal
 decimalButton.addEventListener('click', () => {
+    decimalPressed = true;
     displayScreen.value = `${displayValue}.`;
 })
-
-// bug - deleting the result and continuing with a new operation
 
 // add decimal support
 // add keyboard support
