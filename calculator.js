@@ -1,4 +1,9 @@
-
+class Calculator {
+    constructor(previousOperation, currentOperation) {
+        this._previousOperation = previousOperation || ''; // default value is an empty string
+        this._currentOperation = currentOperation || '0';//default value is a zero
+    }
+}
 
 const displayScreen = document.getElementById('display');
 const numberButtons = document.querySelectorAll('[data-number]');
