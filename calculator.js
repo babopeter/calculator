@@ -67,7 +67,6 @@ class Calculator {
     }
 }
 
-// const displayScreen = document.getElementById('display');
 const numberButtons = document.querySelectorAll('[data-number]');
 const operatorButtons = document.querySelectorAll('[data-operator]');
 const equalsButton = document.querySelector('[data-equals]');
@@ -78,7 +77,6 @@ const currentOperandTextElement = document.querySelector('[data-current-operator
 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement);
 
-// clicking numbers
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         calculator.displayNumber(button.innerText);
@@ -86,7 +84,6 @@ numberButtons.forEach(button => {
     });
 });
 
-// clicking operations
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
         calculator.chooseOperation(button.innerText);
@@ -108,3 +105,41 @@ deleteButton.addEventListener('click', button => {
     calculator.delete();
     calculator.updateDisplay();
 })
+
+window.addEventListener('keydown', function(e) {
+    const key = document.querySelector(`button[data-key="${e.key}"]`);
+    console.log(e.key);
+    switch(key.innerText) {
+        case 'AC':
+            calculator.clear();
+            calculator.updateDisplay();
+            return;
+        case 'DEL':
+            calculator.delete();
+            calculator.updateDisplay();
+            return;
+        case '/':
+            calculator.chooseOperation(key.innerText);
+            calculator.updateDisplay();
+            break;
+        case 'x':
+            calculator.chooseOperation(key.innerText);
+            calculator.updateDisplay();
+            break;
+        case '+':
+            calculator.chooseOperation(key.innerText);
+            calculator.updateDisplay();
+            break;
+        case '-':
+            calculator.chooseOperation(key.innerText);
+            calculator.updateDisplay();
+            break;
+        case '=':
+            calculator.calculate();
+            calculator.updateDisplay();
+            break;
+        default:
+            calculator.displayNumber(key.innerText);
+            calculator.updateDisplay();
+    }
+});
