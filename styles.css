@@ -1,10 +1,23 @@
+:root {
+    --dgreen: rgba(0, 129, 167, .75);
+    --dgreenfull: rgba(0, 129, 167, .9);
+    --lgreen: rgba(0, 175, 185, .75);
+    --lgreenfull: rgba(0, 175, 185, .9);
+    --yellow: rgba(253, 252, 220, .75);
+    --yellowfull: rgba(253, 252, 220, .9);
+    --orange: rgba(254, 217, 183, .75);
+    --orangefull: rgba(254, 217, 183, .9);
+    --red: rgba(240, 113, 103, .75);
+    --redfull: rgba(240, 113, 103, .9);
+}
+
 body {
     box-sizing: border-box;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     padding: 0;
     margin: 0;
-    background: grey;
+    background: white;
 }
 
 .calculator {
@@ -14,18 +27,21 @@ body {
     min-height: 100vh; /* fill 100% of view height */
     grid-template-columns: repeat(4, 100px); /* 4 columns, 100px wide */
     grid-template-rows: minmax(120px, auto) repeat(5, 100px); /* min 120 px tall, but grow to fit large numbers */
+    /* border: 2px solid rgba(1, 1, 1, 1); */
 }
+
 
 .calculator > button {
     cursor: pointer;
     font-size: 2rem;
-    border: 1px solid white;
+    border: 2px solid rgba(255, 255, 255, 1);
+    border-radius: 10px;
     outline: none;
-    background-color: rgba(255, 255, 255, .75); /* add opacity */
+    background-color: var(--orange);
 }
 
 .calculator > button:hover {
-    background-color: rgba(255, 255, 255, .9);
+    background-color: var(--orangefull);
 }
 
 .bigbutton {
@@ -34,7 +50,7 @@ body {
 
 .output {
     grid-column: 1 / -1;
-    background-color: rgba(0, 0, 0, .75);
+    background-color: var(--dgreenfull);
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
@@ -42,6 +58,8 @@ body {
     padding: 10px;
     word-wrap: break-word;
     word-break: break-all;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 1);
 }
 
 .output .previousoperation {
@@ -53,3 +71,52 @@ body {
     color: white;
     font-size: 2.5rem;
 }
+
+button[data-all-clear],
+button[data-delete]{
+    background-color: var(--red);
+}
+
+button[data-all-clear]:hover,
+button[data-delete]:hover {
+    background-color: var(--redfull);
+}
+
+button[data-operator] {
+    background-color: var(--lgreen);
+}
+
+button[data-operator]:hover {
+    background-color: var(--lgreenfull);
+}
+
+button[data-equals] {
+    background-color: var(--dgreen);
+}
+
+button[data-equals]:hover {
+    background-color: var(--dgreenfull);
+}
+
+.fa-github {
+    color: #333;
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .fa-github:hover {
+    transform: rotate(360deg) scale(1.2);
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+  }
